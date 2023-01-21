@@ -15,20 +15,20 @@ const SignupForm = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  const [addUser, { error } ] = useMutation(ADD_USER, {
-    update(cache, { data: {addUser } }) {
-      try {
-        const { user } = cache.readQuery ({ query: QUERY_ME })
+  const [addUser, { error } ] = useMutation(ADD_USER)//, {
+  //   update(cache, { data: {addUser } }) {
+  //     try {
+  //       const { user } = cache.readQuery ({ query: QUERY_ME })
 
-        cache.createUser({
-          query: QUERY_ME,
-          data: { user: [addUser, ... user] }
-        })
-      } catch(e) {
-        console.error(e);
-      }
-    }
-  })
+  //       cache.createUser({
+  //         query: QUERY_ME,
+  //         data: { user: [addUser, ... user] }
+  //       })
+  //     } catch(e) {
+  //       console.error(e);
+  //     }
+  //   }
+  // })
 
 
 
@@ -49,15 +49,19 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await createUser(userFormData);
+      // const response = await createUser(userFormData);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      // if (!response.ok) {
+      //   throw new Error('something went wrong!');
+      // }
 
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
+      // const { token, user } = await response.json();
+      // console.log(user);
+      const { data } = await addUser({
+        variables: userFormData
+      })
+
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
