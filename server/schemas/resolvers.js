@@ -6,13 +6,8 @@ const { User } = require('../models');
 const resolvers = {
 
     Query: {
-        users: async(parent, { username }) => {
-            return User.findOne({ username });
-        },
         me: async(parent, args, context ) => {
             if( context.user ) {
-                // const  user = await User.findOne({ _id: context.user._id})
-                // console.log(user);
                 return await User.findOne({ _id: context.user._id}).select('-__v -password');
             }
             throw new AuthenticationError('You need to be logged in!');

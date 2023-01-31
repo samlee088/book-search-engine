@@ -6,11 +6,6 @@ import Navbar from './components/Navbar';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-// const client = new ApolloClient({
-//   uri: '/graphql',
-//   cache: new InMemoryCache(),
-// });
-
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -38,11 +33,6 @@ function App() {
       <Router>
         <>
           <Navbar />
-          {/* <Switch>
-            <Route exact path='/' component={SearchBooks} />
-            <Route exact path='/saved' component={SavedBooks} />
-            <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
-          </Switch> */}
           <Routes>
             <Route 
               path='/' 
